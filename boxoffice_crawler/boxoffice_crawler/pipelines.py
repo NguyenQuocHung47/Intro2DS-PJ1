@@ -12,9 +12,9 @@ class BoxofficeCrawlerPipeline:
 
     def __init__(self):
         self.csvwriter = csv.writer(
-            open("boxoffice2018_2023.csv", "w", newline=''))
+            open("boxoffice2000_2022.csv", "w", newline=''))
         self.csvwriter.writerow(["title", "domestic_revenue", "world_revenue", "distributor",
-                                "opening_revenue", "opening_theaters", "budget", "MPAA", "genres", "release_days"])
+                                "opening_revenue", "opening_theaters", "budget", "MPAA", "genres", "in_release","release_date"])
 
     def process_item(self, item, spider):
         row = []
@@ -27,6 +27,7 @@ class BoxofficeCrawlerPipeline:
         row.append(item["budget"])
         row.append(item["MPAA"])
         row.append(item["genres"])
-        row.append(item["release_days"])
+        row.append(item["in_release"])
+        row.append(item["release_date"])
         self.csvwriter.writerow(row)
         return item

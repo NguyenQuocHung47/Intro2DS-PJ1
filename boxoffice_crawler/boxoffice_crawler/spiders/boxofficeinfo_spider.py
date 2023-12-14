@@ -1,13 +1,14 @@
 import scrapy
 
 from boxoffice_crawler.items import BoxofficeCrawlerItem
+from datetime import datetime
 
 class BoxofficeSpider(scrapy.Spider):
     name = "BoxOfficeMojo"
     allowed_domains = ["boxofficemojo.com"]
     start_urls = []
 
-    for year in range(2018, 2024):
+    for year in range(2000, 2023):
         start_urls.append(f"https://www.boxofficemojo.com/year/{year}/")
 
     def parse(self, response):
@@ -84,7 +85,23 @@ class BoxofficeSpider(scrapy.Spider):
         if 'In Release' in elements:
             r = elements.index('In Release') + 1
             loc_release = '//*[@id="a-page"]/main/div/div[3]/div[4]/div[{}]/span[2]/text()'.format(r)
-            item["release_days"] = response.xpath(loc_release)[0].extract().split()[0]
+            item["in_release"] = response.xpath(loc_release)[0].extract().split()[0]
         else:
-            item["release_days"] = "N/A"
+            item["in_release"] = "N/A"
+        # Realease Day
+        if 'Release Date' in elements:
+            r = elements.index('Release Date') + 1
+            loc_release = '//*[@id="a-page"]/main/div/div[3]/div[4]/div[{}]/span[2]/a/text()'.format(r)
+            release_date_str = response.xpath(loc_release).get(default="N/A")
+           
+
+            # Parse the date string and format it in "day/month/year"
+            try:
+                release_date = datetime.strptime(release_date_str, "%b %d, %Y")
+                item["release_date"] = release_date.strftime("%d/%m/%Y")
+            except ValueError:
+                item["release_date"] = "N/A"
+        else:
+            item["release_date"] = "N/A"
+            
         yield item

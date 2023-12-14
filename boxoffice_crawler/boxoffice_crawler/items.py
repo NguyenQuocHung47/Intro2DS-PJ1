@@ -18,5 +18,6 @@ class BoxofficeCrawlerItem(scrapy.Item):
     budget = scrapy.Field()
     MPAA = scrapy.Field()
     genres = scrapy.Field()
-    release_days = scrapy.Field()
+    in_release = scrapy.Field()
+    release_date = scrapy.Field()
     pass
