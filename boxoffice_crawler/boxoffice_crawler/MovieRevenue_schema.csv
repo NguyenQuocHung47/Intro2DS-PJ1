@@ -1,0 +1,11 @@
+STT,name,meaning
+1,title,Tựa đề phim
+2,domestic_revenue,Doanh thu trong nước (USA)
+3,world_revenue,Doanh thu toàn cầu 
+4,distributor,Nhà phân phối
+5,opening_revenue,"Doanh thu mở màn, hay còn được gọi là doanh thu đạt được trong tuần đầu tiên"
+6,opening_theater,Số lượng rạp mà bộ phim được chiếu trong được chiếu trong tuần đầu tiên
+7,budget,Ngân sách dùng để sản xuất bộ phim
+8,MPPA, Chỉ số đánh giá cảu Hiệp Hội điện ảnh Hoa Kỳ
+10,in_release,Số ngày bộ phim được phát hành
+11,release_date,Ngày phát hành
