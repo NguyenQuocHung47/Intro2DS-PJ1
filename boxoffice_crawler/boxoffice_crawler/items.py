@@ -20,4 +20,5 @@ class BoxofficeCrawlerItem(scrapy.Item):
     genres = scrapy.Field()
     in_release = scrapy.Field()
     release_date = scrapy.Field()
+    running_time = scrapy.Field()
     pass

@@ -17,6 +17,8 @@ class BoxofficeSpider(scrapy.Spider):
             url = response.urljoin(href[0].extract())
             yield scrapy.Request(url, callback=self.parse_page_contents)
 
+    
+
     def parse_page_contents(self, response):
         item = BoxofficeCrawlerItem()
         item["title"] = response.xpath('//*[@id="a-page"]/main/div/div[1]/div[1]/div/div/div[2]/h1/text()')[0].extract()
@@ -72,6 +74,19 @@ class BoxofficeSpider(scrapy.Spider):
             item["MPAA"] = response.xpath(loc_MPAA)[0].extract()
         else:
             item["MPAA"] = "N/A"
+        if 'Running Time' in elements:
+            r = elements.index('Running Time') + 1
+            loc_running = '//*[@id="a-page"]/main/div/div[3]/div[4]/div[{}]/span[2]/text()'.format(r)
+            running_time_str = response.xpath(loc_running).get(default="N/A")
+
+            # Parse the running time string
+            try:
+                running_time = parse_running_time(running_time_str)
+                item["running_time"] = running_time
+            except ValueError:
+                item["running_time"] = "N/A"
+        else:
+            item["running_time"] = "N/A"
 
         # Genres
         if 'Genres' in elements:
@@ -103,5 +118,25 @@ class BoxofficeSpider(scrapy.Spider):
                 item["release_date"] = "N/A"
         else:
             item["release_date"] = "N/A"
+         # Running Time
+        
+                
             
         yield item
+def parse_running_time(running_time_str):
+    # Split the string into parts
+        parts = running_time_str.split()
+        # Initialize the total running time
+        running_time = 0
+        # Iterate over the parts
+        for i in range(0, len(parts), 2):
+            # Get the number part
+            number = int(parts[i])
+            # Get the unit part
+            unit = parts[i + 1]
+            # If the unit is "hr", multiply the number by 60
+            if "hr" in unit:
+                number *= 60
+            # Add the number to the total running time
+            running_time += number
+        return running_time
