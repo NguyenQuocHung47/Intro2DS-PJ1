@@ -8,7 +8,11 @@ class BoxofficeSpider(scrapy.Spider):
     allowed_domains = ["boxofficemojo.com"]
     start_urls = []
 
+<<<<<<< HEAD
     for year in range(2000, 2023):
+=======
+    for year in range(1990, 2023):
+>>>>>>> 8036ffbd0bc95fc8bf1cd15f679204a4e88c9006
         start_urls.append(f"https://www.boxofficemojo.com/year/{year}/")
 
     def parse(self, response):
