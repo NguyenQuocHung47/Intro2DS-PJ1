@@ -12,7 +12,7 @@ class BoxofficeCrawlerPipeline:
 
     def __init__(self):
         self.csvwriter = csv.writer(
-            open("boxoffice2000_2022.csv", "w", newline=''))
+            open("boxoffice_1990_2022.csv", "w", newline=''))
         self.csvwriter.writerow(["title", "domestic_revenue", "world_revenue", "distributor",
                                 "opening_revenue", "opening_theaters", "budget", "MPAA", "genres", "in_release","release_date"])
 
