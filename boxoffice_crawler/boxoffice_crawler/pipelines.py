@@ -14,7 +14,7 @@ class BoxofficeCrawlerPipeline:
         self.csvwriter = csv.writer(
             open("boxoffice_1990_2022.csv", "w", newline=''))
         self.csvwriter.writerow(["title", "domestic_revenue", "world_revenue", "distributor",
-                                "opening_revenue", "opening_theaters", "budget", "MPAA","running_time", "genres", "in_release","release_date"])
+                                "opening_revenue", "opening_theaters", "budget", "MPAA", "genres","running_time", "in_release","release_date"])
 
     def process_item(self, item, spider):
         row = []
